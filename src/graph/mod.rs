@@ -1,5 +1,4 @@
 pub mod bfs;
-pub mod short_path;
 
 ///Node is just an integer here
 ///adjacency_list[i] contains the index of nodes adjacent to the node vertices[i]
