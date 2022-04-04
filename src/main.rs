@@ -7,5 +7,5 @@ fn main() {
     let bf_tree = bfs::bfs(&graph);
 
     println!("Breath first tree: {:?}", bf_tree);
-    println!("Shortest path: {:?}" ,shortest_path::dijkstra(&graph, 0,1));
+    println!("Shortest path: {:?}" ,shortest_path::dijkstra(&graph, 0,5));
 }

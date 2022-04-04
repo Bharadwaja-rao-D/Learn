@@ -61,22 +61,19 @@ pub fn dijkstra(graph: &Graph, src: i32, destination: i32) -> Vec<i32> {
     }
 
 
-    //TODO: Correct but try to reduce the time complexity
     let mut path = vec![];
     {
         let mut last = path_constructor.pop().unwrap();
-        while last.from != src  || last.to != src{
-            path.push(last.to);
-            for item in &path_constructor {
-                if item.to == last.from {
-                    last.from = item.from;
-                    last.to = item.to;
-                    last.weight = item.weight;
-                }
+        path_constructor.reverse();
+        path.push(last.to);
+        for item in path_constructor{
+            if item.to == last.from {
+               last = item;
+               path.push(last.to);
             }
         }
     }
-    path.push(src);
+
     path.reverse();
     path
 }
