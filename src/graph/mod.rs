@@ -1,4 +1,5 @@
 pub mod bfs;
+pub mod shortest_path;
 
 ///Node is just an integer here
 ///adjacency_list[i] contains the index of nodes adjacent to the node vertices[i]
@@ -39,6 +40,24 @@ impl Graph{
                         Graph::add_unweights(vec![1,4]), Graph::add_unweights(vec![4]), Graph::add_unweights(vec![0,2,3]),
                         Graph::add_unweights(vec![1,6]), Graph::add_unweights(vec![5]) ] }
 
+    }
+
+    pub fn new_weighted() -> Graph {
+        Graph { vertices: vec![ Node::new(0),
+        Node::new(1),
+        Node::new(2),
+        Node::new(3),
+        Node::new(4),
+        Node::new(5),
+        ],
+        adjacency_list: vec![
+            vec![(1,7), (2,2), (4,3)],
+            vec![(2,3)],
+            vec![(0,2), (1,3), (3,1)],
+            vec![(2,1), (5,2)],
+            vec![(0,3), (5,3)],
+            vec![(3,2), (4,3)],
+        ] }
     }
 }
 
