@@ -60,10 +60,23 @@ pub fn dijkstra(graph: &Graph, src: i32, destination: i32) -> Vec<i32> {
         this_nodes[src as usize].removed = true;
     }
 
-    println!("path_constructor: {:?}", path_constructor);
 
-    path_constructor.iter().fold(vec![], |mut path, ele| {
-        path.push(ele.from);
-        path
-    })
+    //TODO: Correct but try to reduce the time complexity
+    let mut path = vec![];
+    {
+        let mut last = path_constructor.pop().unwrap();
+        while last.from != src  || last.to != src{
+            path.push(last.to);
+            for item in &path_constructor {
+                if item.to == last.from {
+                    last.from = item.from;
+                    last.to = item.to;
+                    last.weight = item.weight;
+                }
+            }
+        }
+    }
+    path.push(src);
+    path.reverse();
+    path
 }
