@@ -4,13 +4,17 @@ pub mod shortest_path;
 ///Node is just an integer here
 ///adjacency_list[i] contains the index of nodes adjacent to the node vertices[i]
 
+///x and y represent the position of the node..
+///for heuristic search
 pub struct Node{
     value: i32,
+    x: i32,
+    y: i32,
 }
 
 impl Node{
-    fn new(value: i32) -> Node {
-        Node { value }
+    fn new(value: i32, x: i32, y: i32) -> Node {
+        Node { value, x, y}
     }
 }
 
@@ -29,13 +33,13 @@ impl Graph{
     }
 
     pub fn new_unweighted() -> Graph{
-        Graph { vertices: vec![Node::new(0),
-        Node::new(1),
-        Node::new(2),
-        Node::new(3),
-        Node::new(4),
-        Node::new(5),
-        Node::new(32)],
+        Graph { vertices: vec![Node::new(0,0,0),
+        Node::new(1,0,0),
+        Node::new(2,0,0),
+        Node::new(3,0,0),
+        Node::new(4,0,0),
+        Node::new(5,0,0),
+        Node::new(32,0,0)],
         adjacency_list: vec![ Graph::add_unweights(vec![1,4]), Graph::add_unweights(vec![0,2,5]),
                         Graph::add_unweights(vec![1,4]), Graph::add_unweights(vec![4]), Graph::add_unweights(vec![0,2,3]),
                         Graph::add_unweights(vec![1,6]), Graph::add_unweights(vec![5]) ] }
@@ -43,13 +47,13 @@ impl Graph{
     }
 
     pub fn new_weighted() -> Graph {
-        Graph { vertices: vec![ Node::new(0),
-        Node::new(1),
-        Node::new(2),
-        Node::new(3),
-        Node::new(4),
-        Node::new(5),
-        Node::new(6),
+        Graph { vertices: vec![ Node::new(0,0,0),
+        Node::new(1,0,0),
+        Node::new(2,0,0),
+        Node::new(3,0,0),
+        Node::new(4,0,0),
+        Node::new(5,0,0),
+        Node::new(6,0,0),
         ],
         adjacency_list: vec![
             vec![(1,7), (2,2), (4,3)],
