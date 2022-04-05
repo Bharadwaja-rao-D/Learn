@@ -5,11 +5,13 @@ use std::collections::BinaryHeap;
 struct Node{
     _value: i32,
     removed: bool,
+    _x: i32,
+    _y: i32,
 }
 
 impl Node {
     fn build_node(nodes: &Vec<super::Node>) -> Vec<Node>{
-        nodes.into_iter().map(|ele| Node{_value: ele.value, removed: false}).collect()
+        nodes.into_iter().map(|ele| Node{_value: ele.value, _x: ele.x, _y: ele.y, removed: false}).collect()
     }
 }
 
@@ -33,7 +35,8 @@ impl PartialOrd for PrioNode{
 }
 
 
-pub fn dijkstra(graph: &Graph, src: i32, destination: i32) -> Vec<i32> {
+//func is used to compute the heurestic value
+fn astar<T: Fn(&super::Node) -> i32>(graph: &Graph, src: i32, destination: i32, func: &T) -> Vec<i32> {
     let mut path_constructor = vec![];
     let mut heap: BinaryHeap<PrioNode> = BinaryHeap::new();
     let mut this_nodes = Node::build_node(&graph.vertices);
@@ -54,7 +57,7 @@ pub fn dijkstra(graph: &Graph, src: i32, destination: i32) -> Vec<i32> {
 
         for (neighbors, weight) in &graph.adjacency_list[src as usize]{
             if !this_nodes[*neighbors as usize].removed {
-                heap.push(PrioNode { from: src, to: *neighbors, weight: dist + weight });
+                heap.push(PrioNode { from: src, to: *neighbors, weight: dist + weight + func(&graph.vertices[*neighbors as usize])});
             }
         }
         this_nodes[src as usize].removed = true;
@@ -77,3 +80,19 @@ pub fn dijkstra(graph: &Graph, src: i32, destination: i32) -> Vec<i32> {
     path.reverse();
     path
 }
+
+pub fn dijkstra(graph: &Graph, src: i32, destination: i32)  -> Vec<i32>{
+    let heuristic = |_ele: &super::Node| -> i32{
+        0
+    };
+    astar(graph, src, destination, &heuristic)
+}
+
+pub fn astar_shortpath(graph: &Graph, src: i32, destination: i32)  -> Vec<i32>{
+    let heuristic = |ele: &super::Node| -> i32{
+        let destination_point = &graph.vertices[destination as usize];
+        (((destination_point.x - ele.x).pow(2) + (destination_point.y - ele.y).pow(2)) as f64).sqrt() as i32
+    };
+    astar(graph, src, destination, &heuristic)
+}
+
