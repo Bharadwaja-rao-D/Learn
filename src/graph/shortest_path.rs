@@ -88,6 +88,7 @@ pub fn dijkstra(graph: &Graph, src: i32, destination: i32)  -> Vec<i32>{
     astar(graph, src, destination, &heuristic)
 }
 
+///some random doc comment
 pub fn astar_shortpath(graph: &Graph, src: i32, destination: i32)  -> Vec<i32>{
     let heuristic = |ele: &super::Node| -> i32{
         let destination_point = &graph.vertices[destination as usize];
