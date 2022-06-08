@@ -35,7 +35,6 @@ impl FromStr for Graph {
             adj_list.push(vec![]);
         }
 
-        //TODO: It will fail if from the second line onwards there is no sorting
         for line in adj_stuff.lines() {
             let (curr_ver, adj_vertices) = line.split_once(':').unwrap();
             let curr_ver: usize = curr_ver.parse().unwrap();

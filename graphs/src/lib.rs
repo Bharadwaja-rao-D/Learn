@@ -1,5 +1,6 @@
 pub mod bfs;
 pub mod parsing;
+pub mod shortest_paths;
 
 #[derive(Debug, PartialEq)]
 //The input of the graph will be in the format:

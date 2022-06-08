@@ -1,10 +1,16 @@
+use std::collections::VecDeque;
+
 use crate::{Graph, Vertex};
 
 impl Graph {
     //returns the vector of indices of vertices
+    ///TODO: You can do this:
+    ///```let layer = VecDeque::new();```
+    ///if you want any info about the
+    ///layer of the node
     pub fn bfs(&self, source: usize) -> Vec<usize> {
         let mut bfs_traverse = vec![];
-        let mut visited: Vec<usize> = vec![];
+        let mut visited: VecDeque<usize> = VecDeque::new();
         let mut vertices: Vec<(&Vertex, bool)> =
             self.vertices
                 .iter()
@@ -13,17 +19,17 @@ impl Graph {
                     return vertex_visted;
                 });
 
-        visited.push(source);
+        visited.push_back(source);
         vertices[source].1 = true;
 
         while !visited.is_empty() {
-            let source = visited.remove(0);
+            let source = visited.pop_front().unwrap();
             bfs_traverse.push(source);
 
             for (adj_vertex_index, _weight) in self.adj_list[source].iter() {
                 let adj_vertex_index = *adj_vertex_index as usize;
                 if !vertices[adj_vertex_index].1 {
-                    visited.push(adj_vertex_index);
+                    visited.push_back(adj_vertex_index);
                     vertices[adj_vertex_index].1 = true;
                 }
             }
