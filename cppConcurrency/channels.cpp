@@ -1,25 +1,33 @@
-/*Implimentation similar to the rust channels*/
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
+#include <chrono>
+#define MAX_SIZE 10
 
+typedef struct Shared{
+	std::mutex lock;
+	std::condition_variable cv;
+	int buffer[MAX_SIZE];
+	int in = 0;
+	int out = 0;
+}Shared;
 
-template<typename T>
-class Sender{
-	public:
-		void send(T value){}
-};
-
-template<typename T>
-class Reciever{
+class Channel{
+	Shared inner;
 	public: 
-		T recv(){}
+	void producer(int item){
+		//if (last_full+1) % MAX_SIZE == next_free => full
+
+		std::unique_lock<std::mutex> lock(inner.lock);
+		//cv will acquire lock internally
+		inner.cv.wait(
+				lock, [&] { return (inner.in + 1) % MAX_SIZE != inner.out; });
+		inner.buffer[inner.in] = item;
+		inner.in = (inner.in + 1) % MAX_SIZE;
+		lock.unlock();
+		inner.cv.notify_one();
+	}
+
 };
 
-template<typename T>
-struct Channel{
-	Sender<T> Sender;
-	Reciever<T> Reciever;
-};
-
-template<typename T>
-Channel<T> channel(const unsigned size){
-	return Channel<T>{};
-}
