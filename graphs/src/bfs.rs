@@ -4,10 +4,6 @@ use crate::{Graph, Vertex};
 
 impl Graph {
     //returns the vector of indices of vertices
-    ///TODO: You can do this:
-    ///```let layer = VecDeque::new();```
-    ///if you want any info about the
-    ///layer of the node
     pub fn bfs(&self, source: usize) -> Vec<usize> {
         let mut bfs_traverse = vec![];
         let mut visited: VecDeque<usize> = VecDeque::new();
