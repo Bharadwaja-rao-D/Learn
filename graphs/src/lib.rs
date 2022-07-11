@@ -1,13 +1,13 @@
 pub mod bfs;
+pub mod mst;
 pub mod parsing;
 pub mod shortest_paths;
 
-#[derive(Debug, PartialEq)]
 //The input of the graph will be in the format:
 //v1, v2, v3 .....
 //vi: (v1,w1), (v2,w2) ......
 //for now:) vi: v1,w1; v2,w2 ......
-
+#[derive(Debug, PartialEq, Clone)]
 pub struct Vertex {
     ///for now it is i32 but later will be a struct
     value: i32,
