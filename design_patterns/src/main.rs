@@ -1,18 +1,20 @@
-use design_patterns::composite::{Component, Composite, Leaf};
+use design_patterns::decorator::{Component, Decorations, MenuBar, ScrollBar};
 
 fn main() {
-    let mut manager1 = Composite::new("Manager1");
-    let mut manager2 = Composite::new("Manager2");
-    let employee1 = Leaf::new("Employee1");
-    let employee2 = Leaf::new("Employee2");
+    let with_scrollbar = ScrollBar::new(vec![Decorations::Nothing]);
+    with_scrollbar.draw();
+    println!("--------------------");
 
-    //TODO: The problem is here the object is getting consumed
-    manager2.add_child(Box::new(employee2));
-    manager2.add_child(Box::new(employee1));
+    let with_scrollbar_menubar = MenuBar::new(vec![Decorations::Nothing, Decorations::ScrollBar]);
+    with_scrollbar_menubar.draw();
+    println!("--------------------");
 
-    manager1.add_child(Box::new(manager2));
-
-    manager1.draw();
-
-    println!("--------------");
+    let test = MenuBar::new(vec![
+        Decorations::Nothing,
+        Decorations::ScrollBar,
+        Decorations::MenuBar,
+        Decorations::ScrollBar,
+        Decorations::MenuBar,
+    ]);
+    test.draw();
 }
